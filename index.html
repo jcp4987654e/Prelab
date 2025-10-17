@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe: Precarización Laboral en Argentina 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0052CC;
+            --dark-text: #172B4D;
+            --light-text: #6B778C;
+            --background: #FFFFFF;
+            --warning-yellow: #FFAB00;
+            --danger-red: #DE350B;
+        }
+        html { scroll-padding-top: 80px; }
+        body { font-family: 'Lato', sans-serif; background-color: #F4F5F7; color: var(--dark-text); }
+        .page { display: none; }
+        .page.active { display: block; }
+        header { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #dfe1e6; }
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 2.75rem; letter-spacing: -0.5px; color: var(--dark-text); }
+        .section-subtitle { font-family: 'Lato', sans-serif; color: var(--light-text); max-width: 800px; margin-left: auto; margin-right: auto; }
+        .card { background-color: var(--background); border: 1px solid #dfe1e6; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04); transition: all 0.3s ease; }
+        .card:hover { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07); transform: translateY(-4px); }
+        body.presentation-mode { overflow: hidden; }
+        .presentation-page body.presentation-mode .slide { display: none; height: calc(100vh - 128px); overflow-y: auto; padding: 2rem; opacity: 0; transition: opacity 0.5s ease-in-out; cursor: pointer;}
+        .presentation-page body.presentation-mode .slide.active-slide { display: flex; align-items: center; justify-content: center; opacity: 1; }
+        .nav-item.active { color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid var(--primary-blue); }
+        
+        /* Timeline Styles */
+        .timeline { border-left: 3px solid var(--primary-blue); }
+        .timeline-item { position: relative; }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -11px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: white;
+            border: 3px solid var(--primary-blue);
+        }
+
+        /* Interactive Detector Styles */
+        .detector-item {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .detector-item .detector-answer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s ease-out;
+        }
+        .detector-item.active .detector-answer {
+            grid-template-rows: 1fr;
+        }
+        .detector-item .detector-answer > div {
+            overflow: hidden;
+        }
+        .detector-item.active .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- PAGE 1: COVER -->
+    <div id="page-cover" class="page active">
+        <section class="bg-white min-h-screen flex flex-col justify-center p-6 md:p-12">
+            <div class="container mx-auto px-6 py-12 text-center">
+                <div class="flex justify-center mb-8">
+                    <img src="https://i.postimg.cc/tJ056QJz/logo-placeholder.png" alt="Logo Instituto" class="h-20">
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-800" style="font-family: 'Montserrat', sans-serif;">PRECARIZACIÓN LABORAL EN ARGENTINA</h1>
+                <p class="text-lg md:text-xl font-light text-gray-600 max-w-4xl mx-auto my-4">Un análisis sobre las modalidades, causas y consecuencias del trabajo no registrado y la vulneración de derechos.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
+                    <button data-target="page-informe" class="page-link bg-slate-50 border border-slate-200 p-8 rounded-lg shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left group">
+                        <div class="flex items-center gap-4">
+                             <i class="fas fa-book-open text-4xl text-blue-600"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-slate-800">Ver Informe Completo</h3>
+                                <p class="mt-1 text-gray-600 text-sm">Explora el análisis del fenómeno, sus causas y marco legal.</p>
+                            </div>
+                        </div>
+                    </button>
+                    <button data-target="page-acciones" class="page-link bg-slate-50 border border-slate-200 p-8 rounded-lg shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left group">
+                         <div class="flex items-center gap-4">
+                            <i class="fas fa-shield-alt text-4xl text-blue-600"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-slate-800">Estrategias y Acciones</h3>
+                                <p class="mt-1 text-gray-600 text-sm">Descubre qué hacer frente a una situación de precarización laboral.</p>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                 <div id="equipo-caratula" class="max-w-5xl mx-auto mt-16 pt-8 border-t">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6">Equipo de Proyecto</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                        <!-- Team members injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE 2: INFORME DETALLADO -->
+    <div id="page-informe" class="page presentation-page">
+        <header class="sticky top-0 z-50">
+           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                 <div class="flex items-center space-x-4">
+                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
+                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">INFORME: PRECARIZACIÓN LABORAL</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="presentation-mode-btn p-2 text-gray-600 hover:text-blue-600" title="Modo Presentación"><i class="play-icon fas fa-play"></i><i class="stop-icon fas fa-stop hidden"></i></button>
+                    <button class="fullscreen-btn p-2 text-gray-600 hover:text-blue-600" title="Pantalla Completa"><i class="fas fa-expand"></i></button>
+                </div>
+            </nav>
+            <div class="presentation-nav-container hidden">
+                <div class="presentation-progress-bar w-0 h-1 bg-blue-600 transition-all duration-300"></div>
+                <div class="presentation-nav-tree container mx-auto px-6 py-2 flex justify-center items-center text-xs text-gray-500 gap-x-4 flex-wrap"></div>
+            </div>
+        </header>
+        <main>
+            <section data-title="Intro" class="slide">
+                <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">¿Qué es la Precarización?</h2><p class="section-subtitle mt-4">Es el proceso de deterioro de las condiciones de trabajo, debilitando derechos y protecciones, lo que genera inestabilidad, vulnerabilidad y desprotección social.</p></div>
+                    <div class="grid lg:grid-cols-3 gap-8 mt-12">
+                        <div class="card text-center"><i class="fas fa-user-clock text-5xl text-blue-600 mb-4"></i><h4 class="font-bold text-xl">Inestabilidad</h4><p class="text-sm text-gray-600">Alta rotación, contratos de corta duración y falta de previsibilidad a futuro.</p></div>
+                        <div class="card text-center"><i class="fas fa-hand-holding-dollar text-5xl text-warning-yellow mb-4"></i><h4 class="font-bold text-xl">Vulnerabilidad de Ingresos</h4><p class="text-sm text-gray-600">Salarios variables, por debajo de los mínimos legales o insuficientes para cubrir la canasta básica.</p></div>
+                        <div class="card text-center"><i class="fas fa-heart-crack text-5xl text-danger-red mb-4"></i><h4 class="font-bold text-xl">Desprotección Social</h4><p class="text-sm text-gray-600">Falta de cobertura de salud, aportes jubilatorios, ART y seguros de desempleo.</p></div>
+                    </div>
+                </div>
+            </section>
+            
+            <section data-title="Modalidades" class="slide">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Modalidades Típicas</h2><p class="section-subtitle mt-4">La precarización se manifiesta de diversas formas, todas orientadas a reducir costos a expensas de los derechos del trabajador.</p></div>
+                    <div class="card grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-slate-50"><i class="fas fa-user-secret text-3xl text-slate-500 w-10 text-center"></i><div><h4 class="font-bold">No Registración ("En negro")</h4><p class="text-sm text-gray-600">El vínculo laboral es invisible para el Estado, sin aportes ni cobertura.</p></div></div>
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-slate-50"><i class="fas fa-sitemap text-3xl text-slate-500 w-10 text-center"></i><div><h4 class="font-bold">Tercerización Abusiva</h4><p class="text-sm text-gray-600">Se usan intermediarios para ocultar al verdadero empleador y eludir responsabilidades.</p></div></div>
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-slate-50"><i class="fas fa-id-badge text-3xl text-slate-500 w-10 text-center"></i><div><h4 class="font-bold">Falso Autónomo</h4><p class="text-sm text-gray-600">Se exige al trabajador facturar como monotributista pero cumple órdenes y horarios.</p></div></div>
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-slate-50"><i class="fas fa-motorcycle text-3xl text-slate-500 w-10 text-center"></i><div><h4 class="font-bold">Trabajo en Plataformas</h4><p class="text-sm text-gray-600">Gestión algorítmica, sin cobertura de riesgos y con costos a cargo del trabajador.</p></div></div>
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-slate-50"><i class="fas fa-file-signature text-3xl text-slate-500 w-10 text-center"></i><div><h4 class="font-bold">Contratos Irregulares</h4><p class="text-sm text-gray-600">Uso de pasantías, becas o contratos eventuales para cubrir puestos permanentes.</p></div></div>
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-slate-50"><i class="fas fa-user-ninja text-3xl text-slate-500 w-10 text-center"></i><div><h4 class="font-bold">Violencia y Acoso</h4><p class="text-sm text-gray-600">Conductas agravadas en contextos precarios por la falta de protección y denuncia.</p></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-title="Causas" class="slide">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Causas y Determinantes</h2><p class="section-subtitle mt-4">El fenómeno responde a una combinación de factores económicos, institucionales y tecnológicos que debilitan el mercado laboral formal.</p></div>
+                    <div class="card grid lg:grid-cols-2 gap-8 items-center mt-12">
+                        <div>
+                            <h3 class="font-bold text-2xl mb-6 text-blue-600">Factores Clave</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4"><i class="fas fa-industry text-blue-600 text-2xl mt-1 w-8 text-center"></i><div><h4 class="font-semibold">Estructurales</h4><p class="text-gray-600 text-sm">Sectores de baja productividad, alta informalidad histórica y fragmentación de las cadenas de valor.</p></div></div>
+                                <div class="flex items-start gap-4"><i class="fas fa-university text-blue-600 text-2xl mt-1 w-8 text-center"></i><div><h4 class="font-semibold">Institucionales</h4><p class="text-gray-600 text-sm">Debilidades en la fiscalización estatal, demoras en el sistema judicial y falta de incentivos para la formalización.</p></div></div>
+                                <div class="flex items-start gap-4"><i class="fas fa-laptop-code text-blue-600 text-2xl mt-1 w-8 text-center"></i><div><h4 class="font-semibold">Tecnológicas</h4><p class="text-gray-600 text-sm">Nuevos modelos de negocio (plataformas), externalización de servicios y gestión algorítmica del trabajo.</p></div></div>
+                                 <div class="flex items-start gap-4"><i class="fas fa-chart-line text-blue-600 text-2xl mt-1 w-8 text-center"></i><div><h4 class="font-semibold">Coyunturales</h4><p class="text-gray-600 text-sm">Crisis macroeconómicas e inflación que erosionan los salarios y presionan sobre las condiciones laborales.</p></div></div>
+                            </div>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-lg border border-red-200 text-center">
+                             <h3 class="font-bold text-2xl mb-6 text-danger-red">Efectos Directos</h2>
+                             <div class="space-y-4">
+                                <div><p class="text-sm text-gray-500">INGRESOS</p><p class="text-3xl font-bold">Menores y más inestables</p></div>
+                                <div><p class="text-sm text-gray-500">SALUD Y SEGURIDAD</p><p class="text-3xl font-bold">Mayor riesgo de accidentes</p></div>
+                                <div><p class="text-sm text-gray-500">TRAYECTORIA</p><p class="text-3xl font-bold">Menos capacitación y promoción</p></div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section data-title="Línea de Tiempo" class="slide">
+                <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Hitos y Reformas (2001-2025)</h2><p class="section-subtitle mt-4">Una mirada a los eventos clave que han moldeado el panorama laboral argentino en las últimas dos décadas.</p></div>
+                    <div class="card mt-12 max-w-3xl mx-auto">
+                        <div class="timeline space-y-8 pl-8">
+                            <div class="timeline-item"><p class="font-bold text-blue-600">2001-2003</p><h4 class="font-semibold">Crisis y Aumento de la Informalidad</h4><p class="text-sm text-gray-600">La crisis económica y social dispara el desempleo y la caída del salario real.</p></div>
+                            <div class="timeline-item"><p class="font-bold text-blue-600">2004</p><h4 class="font-semibold">Fallos Clave de la CSJN ("Aquino", "Vizzoti")</h4><p class="text-sm text-gray-600">La Corte Suprema consolida el principio protectorio, limitando topes indemnizatorios.</p></div>
+                            <div class="timeline-item"><p class="font-bold text-blue-600">2014</p><h4 class="font-semibold">Creación del REPSAL</h4><p class="text-sm text-gray-600">Se crea el Registro Público de Empleadores con Sanciones Laborales como herramienta disuasoria.</p></div>
+                            <div class="timeline-item"><p class="font-bold text-blue-600">2020-2021</p><h4 class="font-semibold">Pandemia y Nuevas Leyes</h4><p class="text-sm text-gray-600">Auge del teletrabajo y plataformas, que lleva a la sanción de la Ley de Teletrabajo.</p></div>
+                            <div class="timeline-item"><p class="font-bold text-blue-600">2024-2025</p><h4 class="font-semibold">Debate sobre Reformas</h4><p class="text-sm text-gray-600">Se discuten reformas que alteran la registración y el período de prueba, generando debate sobre la flexibilidad laboral.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-title="Análisis Sectorial" class="slide">
+                <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Zoom Sectorial Comparado</h2><p class="section-subtitle mt-4">Cada sector presenta riesgos y "banderas rojas" específicas que es crucial conocer para identificar la precariedad.</p></div>
+                    <div class="card mt-12 max-w-6xl mx-auto overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-gray-700 uppercase bg-slate-50">
+                                <tr>
+                                    <th class="px-4 py-3">Sector</th>
+                                    <th class="px-4 py-3">Riesgos Típicos</th>
+                                    <th class="px-4 py-3">"Bandera Roja" (Señal de Alerta)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b"><td class="px-4 py-3 font-semibold">Construcción</td><td class="px-4 py-3">No registración por obra, subcontratación en cadena.</td><td class="px-4 py-3 text-red-600">Altas y bajas masivas de personal por cada obra.</td></tr>
+                                <tr class="border-b bg-slate-50"><td class="px-4 py-3 font-semibold">Comercio/Servicios</td><td class="px-4 py-3">Tiempo parcial encubierto, horas extra sin pagar.</td><td class="px-4 py-3 text-red-600">Recibos de sueldo con montos fijos muy bajos y variables "en negro".</td></tr>
+                                <tr class="border-b"><td class="px-4 py-3 font-semibold">Agrario</td><td class="px-4 py-3">Vivienda inadecuada, no registración estacional.</td><td class="px-4 py-3 text-red-600">Falta de Libreta de Trabajo Rural o alta en RENATRE.</td></tr>
+                                <tr class="border-b bg-slate-50"><td class="px-4 py-3 font-semibold">Casas Particulares</td><td class="px-4 py-3">Subdeclaración de horas, múltiples domicilios sin registro.</td><td class="px-4 py-3 text-red-600">Pago total en efectivo sin ningún tipo de recibo.</td></tr>
+                                <tr class="border-b"><td class="px-4 py-3 font-semibold">Plataformas</td><td class="px-4 py-3">Costos a cargo del trabajador, desconexiones unilaterales.</td><td class="px-4 py-3 text-red-600">Exigencia de monotributo y ausencia total de ART.</td></tr>
+                                <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Sector Público</td><td class="px-4 py-3">Contratos temporarios "crónicos" para tareas permanentes.</td><td class="px-4 py-3 text-red-600">Renovaciones sucesivas de contratos sin llamado a concurso.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section data-title="Género y Juventudes" class="slide">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Impacto Diferencial</h2><p class="section-subtitle mt-4">La precarización no afecta a todos por igual. Mujeres y jóvenes enfrentan obstáculos y vulnerabilidades particulares.</p></div>
+                    <div class="card grid lg:grid-cols-2 gap-8 mt-12">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4 text-blue-600"><i class="fas fa-venus-mars mr-2"></i>Perspectiva de Género</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>Mayor presencia en sectores feminizados y peor remunerados (cuidados, casas particulares, servicios).</li>
+                                <li>Las tareas de cuidado no remunerado limitan la disponibilidad horaria y aumentan la rotación.</li>
+                                <li>Mayor exposición a la violencia y el acoso laboral, agravado por la inestabilidad.</li>
+                            </ul>
+                        </div>
+                         <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h3 class="text-2xl font-bold mb-4 text-blue-600"><i class="fas fa-user-graduate mr-2"></i>Juventudes</h3>
+                             <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>La primera inserción laboral suele ser a través de contratos temporales o informales.</li>
+                                <li>Prevalencia de pasantías mal encuadradas que ocultan relaciones laborales.</li>
+                                <li>Alta participación en la "gig economy" (plataformas) con baja o nula protección social.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section data-title="Actores" class="slide">
+                <div class="container mx-auto px-6 h-full flex flex-col">
+                    <div class="text-center w-full"><h2 class="section-title">Mapa de Actores e Incentivos</h2><p class="section-subtitle mt-4">Entender los intereses de cada parte es clave para comprender el conflicto y construir soluciones.</p></div>
+                    <div class="grid lg:grid-cols-2 gap-6 mt-12 flex-grow">
+                        <div class="card"><h3 class="text-2xl font-bold mb-4">Estado (Nación/Prov.)</h3><p class="text-gray-600 text-sm"><strong>Intereses:</strong> Formalización, recaudación de aportes, paz social. <br><strong>Herramientas:</strong> Leyes, poder de inspección, incentivos fiscales.</p></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-4">Empresas (Grandes y PyMEs)</h3><p class="text-gray-600 text-sm"><strong>Intereses:</strong> Reducción de costos, flexibilidad, supervivencia financiera (PyMEs). <br><strong>Herramientas:</strong> Contratación, subcontratación, lobby.</p></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-4">Sindicatos</h3><p class="text-gray-600 text-sm"><strong>Intereses:</strong> Defensa de salarios y derechos, aumento de afiliados. <br><strong>Herramientas:</strong> Negociación colectiva, movilización, huelga.</p></div>
+                        <div class="card"><h3 class="text-2xl font-bold mb-4">Trabajadores/as</h3><p class="text-gray-600 text-sm"><strong>Intereses:</strong> Ingreso estable, derechos garantizados, seguridad. <br><strong>Herramientas:</strong> Acción individual (denuncia) y colectiva (sindicato).</p></div>
+                    </div>
+                </div>
+            </section>
+
+             <section data-title="Jurisprudencia" class="slide">
+                <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Jurisprudencia Ampliada</h2><p class="section-subtitle mt-4">Decisiones judiciales clave que han definido los límites de la ley y protegido los derechos de los trabajadores.</p></div>
+                    <div class="card grid md:grid-cols-2 gap-6 mt-12">
+                        <div class="p-4 rounded-lg bg-slate-50">
+                            <h4 class="font-bold">CSJN, "Aquino" (2004)</h4>
+                            <p class="text-sm text-gray-600">Declaró inconstitucionales los topes de la Ley de Riesgos del Trabajo, reforzando la tutela de la salud del trabajador.</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-slate-50">
+                            <h4 class="font-bold">CSJN, "Vizzoti" (2004)</h4>
+                            <p class="text-sm text-gray-600">Limitó los recortes al salario base para el cálculo de indemnizaciones, estableciendo un tope del 33%.</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-slate-50">
+                            <h4 class="font-bold">CSJN, "Benítez" (2009)</h4>
+                            <p class="text-sm text-gray-600">Amplió los supuestos de responsabilidad solidaria en cadenas de tercerización (Art. 30 LCT).</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-slate-50">
+                            <h4 class="font-bold">Tribunales sobre Plataformas (2021-2024)</h4>
+                            <p class="text-sm text-gray-600">Confirmaron multas y sanciones por no registración, sentando precedentes sobre la laboralidad en la "gig economy".</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-title="Casos Reales" class="slide">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Casos Reales Desarrollados</h2><p class="section-subtitle mt-4">Ejemplos concretos que ilustran cómo se manifiesta la precarización y cómo interviene el Estado.</p></div>
+                    <div class="grid lg:grid-cols-2 gap-8 mt-12">
+                        <div class="card">
+                            <h4 class="font-semibold text-xl mb-2"><i class="fas fa-motorcycle text-blue-600 mr-2"></i>Plataformas de Delivery (PBA)</h4>
+                            <p class="text-sm text-gray-600"><strong>Infracción:</strong> Ausencia de registración y ART. <strong>Actuación estatal:</strong> Multas administrativas y causas judiciales. <strong>Lección:</strong> Se refuerza el control y se avanza en criterios de laboralidad y cobertura mínima.</p>
+                        </div>
+                        <div class="card">
+                            <h4 class="font-semibold text-xl mb-2"><i class="fas fa-tractor text-green-600 mr-2"></i>Trabajo Agrario Estacional</h4>
+                            <p class="text-sm text-gray-600"><strong>Infracción:</strong> No registración, vivienda precaria. <strong>Actuación estatal:</strong> Operativos coordinados (RENATRE), intimaciones y denuncias por trata. <strong>Lección:</strong> La formalización requiere controles reiterados y fiscalización de condiciones de vida.</p>
+                        </div>
+                         <div class="card">
+                            <h4 class="font-semibold text-xl mb-2"><i class="fas fa-building text-slate-600 mr-2"></i>Contratos Temporarios Crónicos</h4>
+                            <p class="text-sm text-gray-600"><strong>Infracción:</strong> Personal permanente bajo renovaciones sucesivas en el sector público. <strong>Actuación estatal:</strong> Programas de regularización y concursos. <strong>Lección:</strong> La estabilidad requiere reglas claras y seguimiento administrativo.</p>
+                        </div>
+                         <div class="card">
+                            <h4 class="font-semibold text-xl mb-2"><i class="fas fa-store text-orange-600 mr-2"></i>Comercio (Tiempo Parcial Encubierto)</h4>
+                            <p class="text-sm text-gray-600"><strong>Infracción:</strong> Contratos de media jornada con horas extra no registradas. <strong>Actuación estatal:</strong> Inspección y reliquidación de haberes. <strong>Lección:</strong> El registro horario y la cultura de cumplimiento son claves.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <section data-title="Teletrabajo y Plataformas" class="slide">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Nuevas Realidades del Trabajo</h2><p class="section-subtitle mt-4">El teletrabajo y las plataformas digitales presentan desafíos específicos en materia de derechos y regulación.</p></div>
+                    <div class="card grid lg:grid-cols-2 gap-8 mt-12">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4 text-blue-600"><i class="fas fa-laptop-house mr-2"></i>Checklist de Teletrabajo</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                                <li><strong>Derecho a la Desconexión:</strong> Prohibición de contacto fuera del horario laboral.</li>
+                                <li><strong>Provisión de Equipamiento:</strong> La empresa debe proveer las herramientas de trabajo (silla, PC) o compensar su uso.</li>
+                                <li><strong>Compensación de Gastos:</strong> Se debe compensar el mayor consumo de servicios (internet, electricidad).</li>
+                                <li><strong>Reversibilidad:</strong> El trabajador puede solicitar volver a la modalidad presencial.</li>
+                            </ul>
+                        </div>
+                         <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h3 class="text-2xl font-bold mb-4 text-blue-600"><i class="fas fa-robot mr-2"></i>Gestión Algorítmica en Plataformas</h3>
+                             <ul class="list-disc list-inside space-y-2 text-gray-700 text-sm">
+                                <li><strong>Riesgos Clave:</strong> Ingresos volátiles, tiempos muertos no pagados, bloqueos unilaterales y sesgos algorítmicos.</li>
+                                <li><strong>Propuestas Regulatorias:</strong> Presunción de laboralidad, cobertura obligatoria de ART y seguros, y transparencia mínima de criterios.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div class="presentation-arrows hidden">
+             <button class="prev-slide-btn fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/70 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white disabled:opacity-30"><i class="fas fa-chevron-left text-xl"></i></button>
+             <button class="next-slide-btn fixed right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/70 backdrop-blur-sm border rounded-full shadow-lg hover:bg-white"><i class="fas fa-chevron-right text-xl"></i></button>
+        </div>
+    </div>
+    
+    <!-- PAGE 3: ACCIONES -->
+    <div id="page-acciones" class="page">
+        <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm">
+           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
+                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">ESTRATEGIAS Y ACCIONES</h1>
+                </div>
+            </nav>
+        </header>
+         <main>
+            <section class="container mx-auto px-6 py-12">
+                <div class="text-center max-w-4xl mx-auto mb-12">
+                    <h2 class="section-title">Guía Práctica: ¿Qué Hacer?</h2>
+                    <p class="section-subtitle mt-4">Estar informado es la principal herramienta de defensa. Aquí se detallan acciones clave y una herramienta interactiva.</p>
+                </div>
+                
+                 <div class="card mb-12">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600"><i class="fas fa-user-shield mr-2"></i>Checklist para Trabajadores/as</h3>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start gap-3"><i class="fas fa-camera text-blue-500 mt-1 w-5 text-center"></i><strong>Registrar evidencias:</strong> Guardar todos los chats, correos, recibos (incluso no oficiales) y geolocalización que demuestren horarios, órdenes y tareas.</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-search text-blue-500 mt-1 w-5 text-center"></i><strong>Verificar registración:</strong> Con tu CUIL, puedes consultar tus aportes en "Mis Aportes" de AFIP. Si no figuran, no estás registrado/a.</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-balance-scale text-blue-500 mt-1 w-5 text-center"></i><strong>Buscar asesoramiento legal:</strong> Acudir al sindicato correspondiente o a los patrocinios jurídicos gratuitos de los Ministerios de Trabajo.</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-bullhorn text-blue-500 mt-1 w-5 text-center"></i><strong>Denunciar:</strong> La falta de registración puede denunciarse anónimamente ante AFIP. En casos de explotación o trata, llamar a la Línea 145 (anónima, gratuita, 24hs).</li>
+                    </ul>
+                </div>
+
+                <div class="card mb-12">
+                     <h3 class="text-2xl font-bold mb-6 text-center text-blue-600">Detector de Señales de Alerta</h3>
+                     <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">Haz clic en cada situación para entender por qué es una señal de alerta de precarización laboral.</p>
+                     <div id="detector-container" class="space-y-4 max-w-3xl mx-auto">
+                        <!-- Interactive items injected by JS -->
+                     </div>
+                </div>
+
+                <div class="card mb-12">
+                    <h3 class="text-2xl font-bold mb-6 text-slate-700"><i class="fas fa-building-shield mr-2"></i>Guía para Empleadores/as</h3>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start gap-3"><i class="fas fa-sitemap text-slate-500 mt-1 w-5 text-center"></i><strong>Auditar Proveedores:</strong> Realizar un control de la documentación laboral de los subcontratistas para evitar la responsabilidad solidaria del Art. 30 de la LCT.</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-file-signature text-slate-500 mt-1 w-5 text-center"></i><strong>Revisar Contrataciones:</strong> Asegurar que las modalidades contractuales (pasantías, eventual) se ajusten estrictamente a la ley y no encubran puestos permanentes.</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-user-ninja text-slate-500 mt-1 w-5 text-center"></i><strong>Implementar Protocolos:</strong> Desarrollar y comunicar activamente protocolos de prevención y acción contra la violencia y el acoso laboral (Convenio 190 OIT).</li>
+                         <li class="flex items-start gap-3"><i class="fas fa-laptop-house text-slate-500 mt-1 w-5 text-center"></i><strong>Cumplir con Ley de Teletrabajo:</strong> Garantizar el derecho a la desconexión, proveer equipamiento y compensar gastos para los trabajadores remotos.</li>
+                    </ul>
+                </div>
+                <div class="text-center">
+                    <button data-target="page-conclusiones" class="page-link bg-blue-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-700 transition-all text-lg shadow-lg hover:shadow-xl">
+                        Ver Conclusiones y Políticas Públicas <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PAGE 4: CONCLUSIONES -->
+    <div id="page-conclusiones" class="page">
+        <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm">
+           <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button data-target="page-cover" class="page-link p-2 text-gray-600 hover:text-blue-600" title="Volver al inicio"><i class="fas fa-home"></i></button>
+                    <h1 class="text-xl font-bold" style="font-family: 'Montserrat', sans-serif;">CONCLUSIONES FINALES</h1>
+                </div>
+            </nav>
+        </header>
+         <main>
+            <section class="bg-slate-800 text-white">
+                <div class="container mx-auto px-6 py-20 text-center">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'Montserrat', sans-serif;">Conclusión y Mirada a Futuro</h2>
+                    <p class="text-lg text-slate-300 max-w-4xl mx-auto">La precarización laboral es un desafío complejo con profundas raíces estructurales. Abordarla requiere un compromiso multifactorial que combine una fiscalización estatal efectiva, marcos normativos claros y actualizados, y una mayor conciencia social. La defensa de los derechos laborales no es solo una cuestión de justicia, sino una condición indispensable para el desarrollo sostenible y la cohesión social en Argentina.</p>
+                </div>
+            </section>
+             <section class="container mx-auto px-6 py-16">
+                 <div class="text-center mb-12">
+                    <h2 class="section-title text-4xl">Roadmap de Políticas Públicas</h2>
+                    <p class="section-subtitle mt-2">Un plan de acción escalonado para avanzar hacia la formalización y el trabajo digno.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="card text-center border-t-4 border-blue-500">
+                        <div class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 mx-auto flex items-center justify-center text-2xl mb-4"><i class="fas fa-stopwatch"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Corto Plazo (0-6 meses)</h4>
+                        <p class="text-sm text-gray-600">Simplificar el alta registral para PyMEs, focalizar inspecciones en sectores críticos y establecer pisos de seguridad para plataformas y teletrabajo.</p>
+                    </div>
+                     <div class="card text-center border-t-4 border-blue-500">
+                        <div class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 mx-auto flex items-center justify-center text-2xl mb-4"><i class="fas fa-calendar-alt"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Mediano Plazo (6-18 meses)</h4>
+                        <p class="text-sm text-gray-600">Crear una ventanilla única digital, certificar proveedores responsables e implementar incentivos temporales para la regularización.</p>
+                    </div>
+                     <div class="card text-center border-t-4 border-blue-500">
+                        <div class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 mx-auto flex items-center justify-center text-2xl mb-4"><i class="fas fa-chart-line"></i></div>
+                        <h4 class="font-bold text-lg mb-2">Largo Plazo (18-36 meses)</h4>
+                        <p class="text-sm text-gray-600">Educar en derechos laborales en la escuela media, reformar integralmente el sistema de inspección y evaluar el impacto de las reformas.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- GLOBAL SETUP & DATA ---
+            const teamMembers = ['Jesus Castellanos', 'Joaquin Huaman', 'Tobias Copa', 'Brian Alcon', 'Lucas Espinola', 'Paloma Mariño'];
+            const detectorData = [
+                {
+                    question: "Me exigen facturar como monotributista, pero tengo un jefe y cumplo un horario fijo.",
+                    answer: "<strong>Alerta de Falso Autónomo.</strong> Si existe subordinación (recibes órdenes, cumples horarios, no tienes autonomía), la ley presume una relación de dependencia. Tienes derecho a aguinaldo, vacaciones pagas, ART e indemnización por despido."
+                },
+                {
+                    question: "Me pagan una parte del sueldo 'en blanco' y otra 'en negro'.",
+                    answer: "<strong>Alerta de Subregistración.</strong> Es una práctica ilegal que perjudica tus aportes jubilatorios, el cálculo del aguinaldo, vacaciones y una futura indemnización. El empleador está evadiendo cargas sociales."
+                },
+                {
+                    question: "Mi contrato temporal se renueva automáticamente cada 3 meses desde hace 2 años.",
+                    answer: "<strong>Alerta de Contratación Fraudulenta.</strong> Los contratos a plazo fijo o eventuales son para necesidades extraordinarias y específicas. Si la tarea es permanente, el contrato se convierte en uno por tiempo indeterminado, dándote derecho a la estabilidad."
+                },
+                {
+                    question: "Trabajo para una app de delivery y no tengo ART ni seguro.",
+                    answer: "<strong>Alerta de Desprotección.</strong> Aunque las empresas de plataforma argumentan que no son empleadoras, la justicia argentina en varios fallos ha reconocido la relación laboral. Tienes derecho a la cobertura de una ART que te proteja ante accidentes."
+                }
+            ];
+
+            // --- TEAM POPULATION ---
+            function populateTeamCaratula(containerSelector) {
+                const container = document.querySelector(containerSelector);
+                if(container) {
+                    container.innerHTML = teamMembers.map(name => `
+                        <div class="text-center">
+                            <i class="fas fa-user-circle text-4xl text-slate-400"></i>
+                            <p class="text-sm font-semibold mt-2 text-slate-700">${name}</p>
+                        </div>
+                    `).join('');
+                }
+            }
+            populateTeamCaratula('#equipo-caratula div');
+
+            // --- INTERACTIVE DETECTOR ---
+            function renderDetector() {
+                const container = document.getElementById('detector-container');
+                if(!container) return;
+                container.innerHTML = detectorData.map(item => `
+                    <div class="detector-item border border-slate-200 rounded-lg overflow-hidden">
+                        <div class="detector-question flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100">
+                            <h4 class="font-semibold text-gray-700">${item.question}</h4>
+                            <i class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                        </div>
+                        <div class="detector-answer">
+                           <div>
+                                <p class="text-sm text-gray-600 p-4 border-t border-slate-200 bg-white">${item.answer}</p>
+                           </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                container.querySelectorAll('.detector-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        // Close other items
+                        container.querySelectorAll('.detector-item').forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        // Toggle current item
+                        item.classList.toggle('active');
+                    });
+                });
+            }
+            renderDetector();
+
+            // --- PAGE NAVIGATION ---
+            const pages = document.querySelectorAll('.page');
+            document.querySelectorAll('.page-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.currentTarget.dataset.target;
+                    pages.forEach(page => page.classList.toggle('active', page.id === targetId));
+                    window.scrollTo(0, 0);
+                    
+                    document.body.classList.remove('presentation-mode');
+                     document.querySelectorAll('.presentation-page').forEach(p => {
+                        const stopIcon = p.querySelector('.stop-icon');
+                        if (stopIcon && !stopIcon.classList.contains('hidden')) {
+                             stopIcon.classList.add('hidden');
+                             p.querySelector('.play-icon').classList.remove('hidden');
+                             p.querySelector('.presentation-nav-container').classList.add('hidden');
+                             p.querySelector('.presentation-arrows').classList.add('hidden');
+                             p.querySelectorAll('.slide').forEach(s => s.classList.remove('active-slide'));
+                        }
+                    });
+                     if (document.fullscreenElement) { document.exitFullscreen(); }
+                });
+            });
+
+            // --- PRESENTATION MODE LOGIC ---
+            function setupPresentationPage(pageElement) {
+                const presentationModeBtn = pageElement.querySelector('.presentation-mode-btn');
+                if (!presentationModeBtn) return;
+
+                const playIcon = presentationModeBtn.querySelector('.play-icon');
+                const stopIcon = presentationModeBtn.querySelector('.stop-icon');
+                const fullscreenBtn = pageElement.querySelector('.fullscreen-btn');
+                const presentationNavContainer = pageElement.querySelector('.presentation-nav-container');
+                const presentationArrows = pageElement.querySelector('.presentation-arrows');
+                const prevSlideBtn = pageElement.querySelector('.prev-slide-btn');
+                const nextSlideBtn = pageElement.querySelector('.next-slide-btn');
+                const slides = Array.from(pageElement.querySelectorAll('main > .slide'));
+                
+                let currentSlideIndex = 0;
+                let isPresentationModeActive = false;
+
+                function setupNavTree() {
+                    const navTree = pageElement.querySelector('.presentation-nav-tree');
+                    navTree.innerHTML = slides.map((slide, index) => `<a href="#" class="nav-item px-3 py-1" data-index="${index}">${slide.dataset.title}</a>`).join('');
+                    navTree.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', e => { 
+                        e.stopPropagation(); 
+                        e.preventDefault(); 
+                        goToSlide(parseInt(e.currentTarget.dataset.index)); 
+                    }));
+                }
+
+                function goToSlide(index) {
+                    if (index < 0 || index >= slides.length) return;
+                    currentSlideIndex = index;
+                    slides.forEach((slide, i) => slide.classList.toggle('active-slide', i === index));
+                    updatePresentationUI();
+                }
+
+                function updatePresentationUI() {
+                    const progress = ((currentSlideIndex + 1) / slides.length) * 100;
+                    pageElement.querySelector('.presentation-progress-bar').style.width = `${progress}%`;
+                    pageElement.querySelectorAll('.presentation-nav-tree .nav-item').forEach((item, i) => item.classList.toggle('active', i === currentSlideIndex));
+                    if (prevSlideBtn) prevSlideBtn.disabled = currentSlideIndex === 0;
+                    if (nextSlideBtn) nextSlideBtn.disabled = currentSlideIndex === slides.length - 1;
+                }
+
+                function togglePresentationMode() {
+                    isPresentationModeActive = !isPresentationModeActive;
+                    document.body.classList.toggle('presentation-mode', isPresentationModeActive);
+                    playIcon.classList.toggle('hidden', isPresentationModeActive);
+                    stopIcon.classList.toggle('hidden', !isPresentationModeActive);
+                    presentationNavContainer.classList.toggle('hidden', !isPresentationModeActive);
+                    if (presentationArrows) presentationArrows.classList.toggle('hidden', !isPresentationModeActive);
+                    
+                    if (isPresentationModeActive) {
+                        goToSlide(0);
+                    } else {
+                        slides.forEach(s => s.classList.remove('active-slide'));
+                         if (document.fullscreenElement) {
+                            document.exitFullscreen();
+                        }
+                    }
+                }
+
+                presentationModeBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePresentationMode(); });
+                if (prevSlideBtn) prevSlideBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentSlideIndex - 1) });
+                if (nextSlideBtn) nextSlideBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentSlideIndex + 1) });
+                
+                slides.forEach(slide => {
+                    slide.addEventListener('click', (e) => {
+                        if (isPresentationModeActive && !e.target.closest('button, a, input, label, .detector-item')) {
+                             if (nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
+                        }
+                    });
+                });
+
+                fullscreenBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (!document.fullscreenElement) {
+                         document.documentElement.requestFullscreen().catch(err => {
+                            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                         });
+                    } else {
+                         document.exitFullscreen();
+                    }
+                });
+                
+                document.addEventListener('keydown', (e) => {
+                    if (isPresentationModeActive && pageElement.classList.contains('active')) {
+                        if (e.key === 'ArrowRight' && nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
+                        if (e.key === 'ArrowLeft' && prevSlideBtn && !prevSlideBtn.disabled) prevSlideBtn.click();
+                        if (e.key === 'Escape' || e.key.toLowerCase() === 'f') {
+                            if (document.fullscreenElement) document.exitFullscreen();
+                            if(isPresentationModeActive) togglePresentationMode();
+                        }
+                    }
+                });
+                
+                setupNavTree();
+            }
+            
+            document.querySelectorAll('.presentation-page').forEach(setupPresentationPage);
+        });
+    </script>
+</body>
+</html>
+
+
