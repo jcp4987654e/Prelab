@@ -560,24 +560,29 @@
                              p.querySelectorAll('.slide').forEach(s => s.classList.remove('active-slide'));
                         }
                     });
-                     if (document.fullscreenElement) { document.exitFullscreen(); }
+                     // Do NOT exit fullscreen when changing pages
                 });
             });
+
+            // --- GLOBAL FULLSCREEN TOGGLE ---
+            function toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                    });
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                }
+            }
 
             // --- COVER PAGE BUTTONS ---
             const startPresCoverBtn = document.getElementById('start-presentation-cover');
             const fullscreenCoverBtn = document.getElementById('fullscreen-cover');
 
             if(fullscreenCoverBtn) {
-                fullscreenCoverBtn.addEventListener('click', () => {
-                     if (!document.fullscreenElement) {
-                         document.documentElement.requestFullscreen().catch(err => {
-                            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                         });
-                    } else {
-                         document.exitFullscreen();
-                    }
-                });
+                fullscreenCoverBtn.addEventListener('click', toggleFullscreen);
             }
 
             if(startPresCoverBtn) {
@@ -647,15 +652,13 @@
                     if (isPresentationModeActive) {
                         goToSlide(0);
                         if (!document.fullscreenElement) {
-                             document.documentElement.requestFullscreen().catch(err => {
+                            document.documentElement.requestFullscreen().catch(err => {
                                 console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
                              });
                         }
                     } else {
                         slides.forEach(s => s.classList.remove('active-slide'));
-                         if (document.fullscreenElement) {
-                            document.exitFullscreen();
-                        }
+                         // Do not exit fullscreen when stopping presentation mode, let the user decide.
                     }
                 }
 
@@ -673,23 +676,19 @@
 
                 fullscreenBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    if (!document.fullscreenElement) {
-                         document.documentElement.requestFullscreen().catch(err => {
-                            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                         });
-                    } else {
-                         document.exitFullscreen();
-                    }
+                    toggleFullscreen();
                 });
                 
+                document.addEventListener('fullscreenchange', () => {
+                    if (!document.fullscreenElement && isPresentationModeActive) {
+                        togglePresentationMode(); // Exit presentation mode if fullscreen is exited
+                    }
+                });
+
                 document.addEventListener('keydown', (e) => {
                     if (isPresentationModeActive && pageElement.classList.contains('active')) {
                         if (e.key === 'ArrowRight' && nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
                         if (e.key === 'ArrowLeft' && prevSlideBtn && !prevSlideBtn.disabled) prevSlideBtn.click();
-                        if (e.key === 'Escape' || e.key.toLowerCase() === 'f') {
-                            if (document.fullscreenElement) document.exitFullscreen();
-                            if(isPresentationModeActive) togglePresentationMode();
-                        }
                     }
                 });
                 
@@ -701,4 +700,3 @@
     </script>
 </body>
 </html>
-
