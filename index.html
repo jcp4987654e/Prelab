@@ -34,7 +34,7 @@
         
         /* Timeline Styles */
         .timeline { border-left: 3px solid var(--primary-blue); }
-        .timeline-item { position: relative; }
+        .timeline-item { position: relative; padding-left: 2rem; }
         .timeline-item:before {
             content: '';
             position: absolute;
@@ -66,22 +66,34 @@
         .detector-item.active .fa-chevron-down {
             transform: rotate(180deg);
         }
+        .themed-header-bg {
+            background-image: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0.9), rgba(255,255,255,0)), url('https://us.123rf.com/450wm/mehaniq/mehaniq2212/mehaniq221201208/196099716-argentina-flag-with-statue-of-lady-justice-constitution-and-judge-hammer-on-black-drapery-concept.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35; /* Increased opacity for better visibility */
+        }
+        .page-conclusions .themed-header-bg {
+             background-image: linear-gradient(to bottom, rgba(244,245,247,0), rgba(244,245,247,0.8), rgba(244,245,247,1)), url('https://us.123rf.com/450wm/mehaniq/mehaniq2212/mehaniq221201208/196099716-argentina-flag-with-statue-of-lady-justice-constitution-and-judge-hammer-on-black-drapery-concept.jpg');
+             opacity: 0.35; /* Increased opacity for better visibility */
+        }
+
     </style>
 </head>
 
 <body>
     <!-- PAGE 1: COVER -->
     <div id="page-cover" class="page active">
-        <section class="bg-white min-h-screen flex flex-col justify-center p-6 md:p-12">
-            <div class="container mx-auto px-6 py-12 text-center">
+        <section class="bg-white min-h-screen flex flex-col justify-between p-6 md:p-12 relative">
+            <div class="themed-header-bg absolute top-0 left-0 right-0 h-64"></div>
+            <div class="container mx-auto px-6 py-12 text-center flex flex-col justify-center flex-grow relative z-10">
                 <div class="flex justify-center mb-8">
-                    <img src="https://i.postimg.cc/tJ056QJz/logo-placeholder.png" alt="Logo Instituto" class="h-20">
+                    <img src="https://13dejulio.edu.ar/wp-content/uploads/2022/03/Encabezado-web1.png" alt="Logo Instituto 13 de Julio" class="h-20">
                 </div>
                 <h1 class="text-4xl md:text-6xl font-extrabold text-slate-800" style="font-family: 'Montserrat', sans-serif;">PRECARIZACIÓN LABORAL EN ARGENTINA</h1>
                 <p class="text-lg md:text-xl font-light text-gray-600 max-w-4xl mx-auto my-4">Un análisis sobre las modalidades, causas y consecuencias del trabajo no registrado y la vulneración de derechos.</p>
                 
                 <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
-                    <button data-target="page-informe" class="page-link bg-slate-50 border border-slate-200 p-8 rounded-lg shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left group">
+                    <button data-target="page-informe" class="page-link bg-white border border-slate-200 p-8 rounded-lg shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left group">
                         <div class="flex items-center gap-4">
                              <i class="fas fa-book-open text-4xl text-blue-600"></i>
                             <div>
@@ -90,7 +102,7 @@
                             </div>
                         </div>
                     </button>
-                    <button data-target="page-acciones" class="page-link bg-slate-50 border border-slate-200 p-8 rounded-lg shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left group">
+                    <button data-target="page-acciones" class="page-link bg-white border border-slate-200 p-8 rounded-lg shadow-sm hover:shadow-xl hover:border-blue-500 transition-all text-left group">
                          <div class="flex items-center gap-4">
                             <i class="fas fa-shield-alt text-4xl text-blue-600"></i>
                             <div>
@@ -168,11 +180,11 @@
                             </div>
                         </div>
                         <div class="bg-red-50 p-6 rounded-lg border border-red-200 text-center">
-                             <h3 class="font-bold text-2xl mb-6 text-danger-red">Efectos Directos</h2>
+                             <h3 class="font-bold text-2xl mb-6 text-danger-red">Efectos Directos</h3>
                              <div class="space-y-4">
-                                <div><p class="text-sm text-gray-500">INGRESOS</p><p class="text-3xl font-bold">Menores y más inestables</p></div>
-                                <div><p class="text-sm text-gray-500">SALUD Y SEGURIDAD</p><p class="text-3xl font-bold">Mayor riesgo de accidentes</p></div>
-                                <div><p class="text-sm text-gray-500">TRAYECTORIA</p><p class="text-3xl font-bold">Menos capacitación y promoción</p></div>
+                                <div class="flex flex-col items-center"><i class="fas fa-money-bill-wave text-3xl text-danger-red mb-2"></i><p class="text-sm text-gray-500">INGRESOS</p><p class="text-xl font-bold">Menores y más inestables</p></div>
+                                <div class="flex flex-col items-center"><i class="fas fa-heart-pulse text-3xl text-danger-red mb-2"></i><p class="text-sm text-gray-500">SALUD Y SEGURIDAD</p><p class="text-xl font-bold">Mayor riesgo de accidentes</p></div>
+                                <div class="flex flex-col items-center"><i class="fas fa-person-digging text-3xl text-danger-red mb-2"></i><p class="text-sm text-gray-500">TRAYECTORIA</p><p class="text-xl font-bold">Menos capacitación y promoción</p></div>
                              </div>
                         </div>
                     </div>
@@ -181,14 +193,45 @@
             
             <section data-title="Línea de Tiempo" class="slide">
                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Hitos y Reformas (2001-2025)</h2><p class="section-subtitle mt-4">Una mirada a los eventos clave que han moldeado el panorama laboral argentino en las últimas dos décadas.</p></div>
+                    <div class="text-center"><h2 class="section-title">Hitos y Reformas</h2><p class="section-subtitle mt-4">Una mirada a los eventos clave que han moldeado el panorama laboral argentino.</p></div>
                     <div class="card mt-12 max-w-3xl mx-auto">
-                        <div class="timeline space-y-8 pl-8">
-                            <div class="timeline-item"><p class="font-bold text-blue-600">2001-2003</p><h4 class="font-semibold">Crisis y Aumento de la Informalidad</h4><p class="text-sm text-gray-600">La crisis económica y social dispara el desempleo y la caída del salario real.</p></div>
-                            <div class="timeline-item"><p class="font-bold text-blue-600">2004</p><h4 class="font-semibold">Fallos Clave de la CSJN ("Aquino", "Vizzoti")</h4><p class="text-sm text-gray-600">La Corte Suprema consolida el principio protectorio, limitando topes indemnizatorios.</p></div>
-                            <div class="timeline-item"><p class="font-bold text-blue-600">2014</p><h4 class="font-semibold">Creación del REPSAL</h4><p class="text-sm text-gray-600">Se crea el Registro Público de Empleadores con Sanciones Laborales como herramienta disuasoria.</p></div>
-                            <div class="timeline-item"><p class="font-bold text-blue-600">2020-2021</p><h4 class="font-semibold">Pandemia y Nuevas Leyes</h4><p class="text-sm text-gray-600">Auge del teletrabajo y plataformas, que lleva a la sanción de la Ley de Teletrabajo.</p></div>
+                        <div class="timeline pl-4">
+                            <div class="timeline-item pb-4"><p class="font-bold text-blue-600">1957</p><h4 class="font-semibold">Reforma Constitucional - Artículo 14 bis</h4><p class="text-sm text-gray-600">Se incorpora el artículo que consagra los derechos del trabajador, la protección de la familia y los beneficios de la seguridad social.</p></div>
+                            <div class="timeline-item pb-4"><p class="font-bold text-blue-600">1974</p><h4 class="font-semibold">Ley de Contrato de Trabajo (N° 20.744)</h4><p class="text-sm text-gray-600">Se sanciona el cuerpo normativo que regula las relaciones individuales de trabajo, pilar del derecho laboral argentino.</p></div>
+                             <div class="timeline-item pb-4"><p class="font-bold text-blue-600">1991</p><h4 class="font-semibold">Ley Nacional de Empleo (N° 24.013)</h4><p class="text-sm text-gray-600">Introduce medidas para combatir el trabajo no registrado y crea el sistema de prestaciones por desempleo.</p></div>
+                            <div class="timeline-item pb-4"><p class="font-bold text-blue-600">2001-2003</p><h4 class="font-semibold">Crisis y Aumento de la Informalidad</h4><p class="text-sm text-gray-600">La crisis económica y social dispara el desempleo y la caída del salario real.</p></div>
+                            <div class="timeline-item pb-4"><p class="font-bold text-blue-600">2004</p><h4 class="font-semibold">Fallos Clave de la CSJN ("Aquino", "Vizzoti")</h4><p class="text-sm text-gray-600">La Corte Suprema consolida el principio protectorio, limitando topes indemnizatorios.</p></div>
+                            <div class="timeline-item pb-4"><p class="font-bold text-blue-600">2014</p><h4 class="font-semibold">Creación del REPSAL</h4><p class="text-sm text-gray-600">Se crea el Registro Público de Empleadores con Sanciones Laborales como herramienta disuasoria.</p></div>
+                            <div class="timeline-item pb-4"><p class="font-bold text-blue-600">2020-2021</p><h4 class="font-semibold">Pandemia y Nuevas Leyes</h4><p class="text-sm text-gray-600">Auge del teletrabajo y plataformas, que lleva a la sanción de la Ley de Teletrabajo.</p></div>
                             <div class="timeline-item"><p class="font-bold text-blue-600">2024-2025</p><h4 class="font-semibold">Debate sobre Reformas</h4><p class="text-sm text-gray-600">Se discuten reformas que alteran la registración y el período de prueba, generando debate sobre la flexibilidad laboral.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <section data-title="Evidencia Visual" class="slide">
+                <div class="container mx-auto px-6">
+                    <div class="text-center"><h2 class="section-title">Evidencia Visual</h2><p class="section-subtitle mt-4">Imágenes y videos que reflejan las diversas facetas de la precarización laboral en el país.</p></div>
+                    <div class="card grid grid-cols-1 lg:grid-cols-4 gap-4 mt-12 items-center">
+                        <!-- Image on the left -->
+                        <div class="lg:col-span-1">
+                            <img src="https://www.eldiarioweb.com/wp-content/uploads/2025/10/pedidos-ya.jpg" alt="Imagen de repartidor de delivery" class="w-full h-96 object-cover rounded-lg shadow-md">
+                        </div>
+                        <!-- Video in the center -->
+                        <div class="lg:col-span-2 h-96 bg-slate-800 rounded-lg flex items-center justify-center overflow-hidden">
+                             <iframe 
+                                width="100%" 
+                                height="100%" 
+                                src="https://www.youtube.com/embed/zk0o2NQUcZ4" 
+                                title="YouTube video player"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <!-- Image on the right -->
+                        <div class="lg:col-span-1">
+                             <img src="https://www.anred.org/wp-content/uploads/2021/03/rurales.jpg" alt="Imagen de trabajadores rurales" class="w-full h-96 object-cover rounded-lg shadow-md">
                         </div>
                     </div>
                 </div>
@@ -255,49 +298,37 @@
                 </div>
             </section>
 
-             <section data-title="Jurisprudencia" class="slide">
+            <section data-title="Jurisprudencia y Casos" class="slide">
                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Jurisprudencia Ampliada</h2><p class="section-subtitle mt-4">Decisiones judiciales clave que han definido los límites de la ley y protegido los derechos de los trabajadores.</p></div>
-                    <div class="card grid md:grid-cols-2 gap-6 mt-12">
-                        <div class="p-4 rounded-lg bg-slate-50">
-                            <h4 class="font-bold">CSJN, "Aquino" (2004)</h4>
-                            <p class="text-sm text-gray-600">Declaró inconstitucionales los topes de la Ley de Riesgos del Trabajo, reforzando la tutela de la salud del trabajador.</p>
+                    <div class="text-center"><h2 class="section-title">Jurisprudencia en Acción</h2><p class="section-subtitle mt-4">Cómo los fallos judiciales clave se aplican a casos reales de precarización laboral.</p></div>
+                    <div class="card grid md:grid-cols-2 gap-8 mt-12">
+                        <div class="p-4 rounded-lg bg-slate-50 space-y-3">
+                            <h4 class="font-bold text-lg text-blue-600"><i class="fas fa-gavel mr-2"></i>Fallo Clave: CSJN, "Benítez" (2009)</h4>
+                            <p class="text-sm text-gray-700"><strong>Principio:</strong> Amplía la responsabilidad solidaria de la empresa principal sobre los empleados de sus contratistas (Art. 30 LCT).</p>
+                             <hr>
+                            <h5 class="font-semibold text-gray-800"><i class="fas fa-hard-hat mr-2"></i>Caso Práctico:</h5>
+                            <p class="text-sm text-gray-600">En el <strong>trabajo agrario o la construcción</strong>, si un trabajador no está registrado por una empresa subcontratada, la empresa principal (dueña del campo o de la obra) también es responsable.</p>
                         </div>
-                        <div class="p-4 rounded-lg bg-slate-50">
-                            <h4 class="font-bold">CSJN, "Vizzoti" (2004)</h4>
-                            <p class="text-sm text-gray-600">Limitó los recortes al salario base para el cálculo de indemnizaciones, estableciendo un tope del 33%.</p>
+                        <div class="p-4 rounded-lg bg-slate-50 space-y-3">
+                            <h4 class="font-bold text-lg text-blue-600"><i class="fas fa-gavel mr-2"></i>Fallo Clave: CSJN, "Aquino" (2004)</h4>
+                            <p class="text-sm text-gray-700"><strong>Principio:</strong> Garantiza una reparación integral por accidentes de trabajo, declarando inconstitucionales los topes indemnizatorios que resulten injustos.</p>
+                             <hr>
+                            <h5 class="font-semibold text-gray-800"><i class="fas fa-motorcycle mr-2"></i>Caso Práctico:</h5>
+                             <p class="text-sm text-gray-600">Un <strong>repartidor de plataforma</strong> que sufre un accidente grave y no tiene ART puede reclamar una indemnización completa tanto a la plataforma como a la empresa intermediaria.</p>
                         </div>
-                        <div class="p-4 rounded-lg bg-slate-50">
-                            <h4 class="font-bold">CSJN, "Benítez" (2009)</h4>
-                            <p class="text-sm text-gray-600">Amplió los supuestos de responsabilidad solidaria en cadenas de tercerización (Art. 30 LCT).</p>
+                        <div class="p-4 rounded-lg bg-slate-50 space-y-3">
+                            <h4 class="font-bold text-lg text-blue-600"><i class="fas fa-gavel mr-2"></i>Fallo Clave: CSJN, "Vizzoti" (2004)</h4>
+                            <p class="text-sm text-gray-700"><strong>Principio:</strong> Protege el salario al limitar al 33% la reducción de la base de cálculo para la indemnización por despido.</p>
+                             <hr>
+                            <h5 class="font-semibold text-gray-800"><i class="fas fa-file-invoice-dollar mr-2"></i>Caso Práctico:</h5>
+                             <p class="text-sm text-gray-600">Un <strong>empleado de comercio</strong> con parte del sueldo "en negro" puede reclamar que su indemnización se calcule sobre el total de lo que realmente cobraba.</p>
                         </div>
-                        <div class="p-4 rounded-lg bg-slate-50">
-                            <h4 class="font-bold">Tribunales sobre Plataformas (2021-2024)</h4>
-                            <p class="text-sm text-gray-600">Confirmaron multas y sanciones por no registración, sentando precedentes sobre la laboralidad en la "gig economy".</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section data-title="Casos Reales" class="slide">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center"><h2 class="section-title">Casos Reales Desarrollados</h2><p class="section-subtitle mt-4">Ejemplos concretos que ilustran cómo se manifiesta la precarización y cómo interviene el Estado.</p></div>
-                    <div class="grid lg:grid-cols-2 gap-8 mt-12">
-                        <div class="card">
-                            <h4 class="font-semibold text-xl mb-2"><i class="fas fa-motorcycle text-blue-600 mr-2"></i>Plataformas de Delivery (PBA)</h4>
-                            <p class="text-sm text-gray-600"><strong>Infracción:</strong> Ausencia de registración y ART. <strong>Actuación estatal:</strong> Multas administrativas y causas judiciales. <strong>Lección:</strong> Se refuerza el control y se avanza en criterios de laboralidad y cobertura mínima.</p>
-                        </div>
-                        <div class="card">
-                            <h4 class="font-semibold text-xl mb-2"><i class="fas fa-tractor text-green-600 mr-2"></i>Trabajo Agrario Estacional</h4>
-                            <p class="text-sm text-gray-600"><strong>Infracción:</strong> No registración, vivienda precaria. <strong>Actuación estatal:</strong> Operativos coordinados (RENATRE), intimaciones y denuncias por trata. <strong>Lección:</strong> La formalización requiere controles reiterados y fiscalización de condiciones de vida.</p>
-                        </div>
-                         <div class="card">
-                            <h4 class="font-semibold text-xl mb-2"><i class="fas fa-building text-slate-600 mr-2"></i>Contratos Temporarios Crónicos</h4>
-                            <p class="text-sm text-gray-600"><strong>Infracción:</strong> Personal permanente bajo renovaciones sucesivas en el sector público. <strong>Actuación estatal:</strong> Programas de regularización y concursos. <strong>Lección:</strong> La estabilidad requiere reglas claras y seguimiento administrativo.</p>
-                        </div>
-                         <div class="card">
-                            <h4 class="font-semibold text-xl mb-2"><i class="fas fa-store text-orange-600 mr-2"></i>Comercio (Tiempo Parcial Encubierto)</h4>
-                            <p class="text-sm text-gray-600"><strong>Infracción:</strong> Contratos de media jornada con horas extra no registradas. <strong>Actuación estatal:</strong> Inspección y reliquidación de haberes. <strong>Lección:</strong> El registro horario y la cultura de cumplimiento son claves.</p>
+                         <div class="p-4 rounded-lg bg-slate-50 space-y-3">
+                            <h4 class="font-bold text-lg text-blue-600"><i class="fas fa-gavel mr-2"></i>Fallos sobre Plataformas (2021-24)</h4>
+                            <p class="text-sm text-gray-700"><strong>Principio:</strong> Diversos tribunales reconocen la existencia de una relación laboral (y no de "colaboradores") con las apps, obligándolas a registrar y dar cobertura.</p>
+                             <hr>
+                            <h5 class="font-semibold text-gray-800"><i class="fas fa-mobile-alt mr-2"></i>Caso Práctico:</h5>
+                             <p class="text-sm text-gray-600">La <strong>inspección del Ministerio de Trabajo en PBA</strong> que multó a las apps se basó en estos criterios, sentando un precedente para la acción estatal en todo el país.</p>
                         </div>
                     </div>
                 </div>
@@ -387,7 +418,7 @@
     </div>
 
     <!-- PAGE 4: CONCLUSIONES -->
-    <div id="page-conclusiones" class="page">
+    <div id="page-conclusiones" class="page page-conclusions">
         <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-sm">
            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
@@ -397,10 +428,12 @@
             </nav>
         </header>
          <main>
-            <section class="bg-slate-800 text-white">
-                <div class="container mx-auto px-6 py-20 text-center">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'Montserrat', sans-serif;">Conclusión y Mirada a Futuro</h2>
-                    <p class="text-lg text-slate-300 max-w-4xl mx-auto">La precarización laboral es un desafío complejo con profundas raíces estructurales. Abordarla requiere un compromiso multifactorial que combine una fiscalización estatal efectiva, marcos normativos claros y actualizados, y una mayor conciencia social. La defensa de los derechos laborales no es solo una cuestión de justicia, sino una condición indispensable para el desarrollo sostenible y la cohesión social en Argentina.</p>
+             <section class="relative pt-16">
+                <div class="themed-header-bg absolute bottom-0 left-0 right-0 h-64"></div>
+                 <div class="container mx-auto px-6 py-20 text-center relative z-10">
+                    <i class="fas fa-gavel text-6xl text-slate-700 mb-6"></i>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-slate-800" style="font-family: 'Montserrat', sans-serif;">Conclusión y Mirada a Futuro</h2>
+                    <p class="text-lg text-slate-600 max-w-4xl mx-auto">La precarización laboral es un desafío complejo con profundas raíces estructurales. Abordarla requiere un compromiso multifactorial que combine una fiscalización estatal efectiva, marcos normativos claros y actualizados, y una mayor conciencia social. La defensa de los derechos laborales no es solo una cuestión de justicia, sino una condición indispensable para el desarrollo sostenible y la cohesión social en Argentina.</p>
                 </div>
             </section>
              <section class="container mx-auto px-6 py-16">
@@ -625,5 +658,3 @@
     </script>
 </body>
 </html>
-
-
