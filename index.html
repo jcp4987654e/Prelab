@@ -85,6 +85,14 @@
     <div id="page-cover" class="page active">
         <section class="bg-white min-h-screen flex flex-col justify-between p-6 md:p-12 relative">
             <div class="themed-header-bg absolute top-0 left-0 right-0 h-64"></div>
+            <div class="absolute top-6 right-6 z-20 flex items-center space-x-4">
+                <button id="start-presentation-cover" class="p-3 bg-white/50 backdrop-blur-sm rounded-full text-gray-600 hover:text-blue-600 hover:bg-white transition-all shadow-md" title="Iniciar Presentación">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button id="fullscreen-cover" class="p-3 bg-white/50 backdrop-blur-sm rounded-full text-gray-600 hover:text-blue-600 hover:bg-white transition-all shadow-md" title="Pantalla Completa">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
             <div class="container mx-auto px-6 py-12 text-center flex flex-col justify-center flex-grow relative z-10">
                 <div class="flex justify-center mb-8">
                     <img src="https://13dejulio.edu.ar/wp-content/uploads/2022/03/Encabezado-web1.png" alt="Logo Instituto 13 de Julio" class="h-20">
@@ -556,6 +564,36 @@
                 });
             });
 
+            // --- COVER PAGE BUTTONS ---
+            const startPresCoverBtn = document.getElementById('start-presentation-cover');
+            const fullscreenCoverBtn = document.getElementById('fullscreen-cover');
+
+            if(fullscreenCoverBtn) {
+                fullscreenCoverBtn.addEventListener('click', () => {
+                     if (!document.fullscreenElement) {
+                         document.documentElement.requestFullscreen().catch(err => {
+                            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                         });
+                    } else {
+                         document.exitFullscreen();
+                    }
+                });
+            }
+
+            if(startPresCoverBtn) {
+                startPresCoverBtn.addEventListener('click', () => {
+                    document.getElementById('page-cover').classList.remove('active');
+                    const informePage = document.getElementById('page-informe');
+                    informePage.classList.add('active');
+
+                    const presentationBtn = informePage.querySelector('.presentation-mode-btn');
+                    if (presentationBtn) {
+                        presentationBtn.click();
+                    }
+                });
+            }
+
+
             // --- PRESENTATION MODE LOGIC ---
             function setupPresentationPage(pageElement) {
                 const presentationModeBtn = pageElement.querySelector('.presentation-mode-btn');
@@ -608,6 +646,11 @@
                     
                     if (isPresentationModeActive) {
                         goToSlide(0);
+                        if (!document.fullscreenElement) {
+                             document.documentElement.requestFullscreen().catch(err => {
+                                console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                             });
+                        }
                     } else {
                         slides.forEach(s => s.classList.remove('active-slide'));
                          if (document.fullscreenElement) {
@@ -658,3 +701,4 @@
     </script>
 </body>
 </html>
+
