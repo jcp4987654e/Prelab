@@ -560,7 +560,6 @@
                              p.querySelectorAll('.slide').forEach(s => s.classList.remove('active-slide'));
                         }
                     });
-                     // Do NOT exit fullscreen when changing pages
                 });
             });
 
@@ -651,14 +650,8 @@
                     
                     if (isPresentationModeActive) {
                         goToSlide(0);
-                        if (!document.fullscreenElement) {
-                            document.documentElement.requestFullscreen().catch(err => {
-                                console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                             });
-                        }
                     } else {
                         slides.forEach(s => s.classList.remove('active-slide'));
-                         // Do not exit fullscreen when stopping presentation mode, let the user decide.
                     }
                 }
 
@@ -681,20 +674,30 @@
                 
                 document.addEventListener('fullscreenchange', () => {
                     if (!document.fullscreenElement && isPresentationModeActive) {
-                        togglePresentationMode(); // Exit presentation mode if fullscreen is exited
+                       togglePresentationMode();
                     }
                 });
-
-                document.addEventListener('keydown', (e) => {
-                    if (isPresentationModeActive && pageElement.classList.contains('active')) {
-                        if (e.key === 'ArrowRight' && nextSlideBtn && !nextSlideBtn.disabled) nextSlideBtn.click();
-                        if (e.key === 'ArrowLeft' && prevSlideBtn && !prevSlideBtn.disabled) prevSlideBtn.click();
-                    }
-                });
-                
+                 
                 setupNavTree();
             }
             
+            // --- GLOBAL KEYDOWN LISTENER ---
+            document.addEventListener('keydown', (e) => {
+                const isPresentation = document.body.classList.contains('presentation-mode');
+                const activePage = document.querySelector('.presentation-page.active');
+
+                if (isPresentation && activePage) {
+                    const prevBtn = activePage.querySelector('.prev-slide-btn');
+                    const nextBtn = activePage.querySelector('.next-slide-btn');
+
+                    if (e.key === 'ArrowLeft' && prevBtn) {
+                        prevBtn.click();
+                    } else if (e.key === 'ArrowRight' && nextBtn) {
+                        nextBtn.click();
+                    }
+                }
+            });
+
             document.querySelectorAll('.presentation-page').forEach(setupPresentationPage);
         });
     </script>
